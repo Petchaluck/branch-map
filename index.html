@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Branch Locations Map</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+      html, body, #map {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+    <script>
+      const branches = [
+        { name: "Impact Challenger 3", lat: 13.91397, lng: 100.54675 },
+        { name: "Impact Arena Zone A", lat: 13.91213, lng: 100.54875 },
+        { name: "Impact Arena Zone B", lat: 13.91215, lng: 100.54872 }
+      ];
+
+      function initMap() {
+        const center = { lat: 13.913, lng: 100.5475 };
+        const map = new google.maps.Map(document.getElementById("map"), {
+          zoom: 17,
+          center: center
+        });
+
+        branches.forEach(branch => {
+          const marker = new google.maps.Marker({
+            position: { lat: branch.lat, lng: branch.lng },
+            map: map,
+            title: branch.name
+          });
+
+          const infoWindow = new google.maps.InfoWindow({
+            content: `<strong>${branch.name}</strong>`
+          });
+
+          marker.addListener("click", () => {
+            infoWindow.open(map, marker);
+          });
+        });
+      }
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD78qC--6-gKxRBhFEWbabDviqueYFBonQ&callback=initMap"
+      async defer></script>
+  </head>
+  <body>
+    <div id="map"></div>
+  </body>
+</html>
